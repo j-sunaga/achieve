@@ -1,0 +1,31 @@
+/* 追記 */
+
+.contact{
+  border-collapse: separate;
+  border-spacing: 8px 0px;
+}
+
+.contact th{
+  height: 7rem;
+  width: 150px;
+  text-align: right;
+}
+
+.contact td input[type="text"],textarea{
+  width: 480px;
+}
+
+.submit-btn{
+  text-align: center;
+}
+
+.submit-btn input{
+  background-color: #42a0b0;
+  color: white;
+  border-style: none;
+  height: 3rem;
+}
+
+.submit-btn input:hover{
+  opacity: 0.6;
+}
