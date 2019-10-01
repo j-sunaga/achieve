@@ -103,12 +103,18 @@ header:after {
   top: 50%;
   left: 50%;
   transform : translate(-50%,-50%);
+  width: 750px;
 }
 
 .function-image {
   float: left;
-  margin: 0px 50px;
+  margin: 0px 30px;
 }
+
+.function-image image {
+  width: 100%;
+}
+
 
 .function:after {
     height: 400px;
