@@ -1,14 +1,26 @@
 class Player
   def hand
     # コンソールを入力待ち状態にし、プレイヤーがコンソールから打ち込んだ値を出力する処理のメソッドの処理をこの中に作成する
-    puts "数字を入力してください"
-    puts "0: グー"
-    puts "1: チョキ"
-    puts "2: パー"
-    player_hand = gets.chomp.to_i
-    return player_hand
+      while true do
+        puts "数字を入力してください"
+        puts "0: グー"
+        puts "1: チョキ"
+        puts "2: パー"
+        player_hand = gets.chomp#ユーザから入力を受け取る
+        if (/[0-9]/ =~ player_hand)#数値か文字列かを判定
+          if(player_hand.to_i.between?(0,2))#数値の範囲を判定
+            player_hand = player_hand.to_i
+            break
+          else
+            puts "0〜2の数字を入力してください。"
+          end#0-2数値範囲判定
+        else
+           puts "0〜2の数字を入力してください。"
+        end#
+      end#数値・文字列判定
+      return player_hand
+     end
   end
-end
 
 class Enemy
   def hand
@@ -21,8 +33,7 @@ end
 class Janken
   def pon(player_hand, enemy_hand)
     janken_hands = ["グー","チョキ","パー"]
-    if player_hand.between?(0,2) && enemy_hand.between?(0,2)
-      result= (player_hand - enemy_hand + 3) % 3 #（自分の手 - 相手の手 + 3）% 3
+    result= (player_hand - enemy_hand + 3) % 3 #（自分の手 - 相手の手 + 3）% 3
       case result #プレイヤーの出し手の判定
         when 2 #プレイヤーの勝利
           puts "相手の手は#{janken_hands[enemy_hand]}です。あなたの勝ちです。"
@@ -35,10 +46,6 @@ class Janken
       # プレイヤーが打ち込んだ値と、Enemyがランダムに出した値でじゃんけんをさせ、その結果をコンソール上に出力するメソッドをこの中に作成する
       # その際、あいこもしくはグー、チョキ、パー以外の値入力時には、もう一度ジャンケンをする
       # 相手がグー、チョキ、パーのうち、何を出したのかも表示させる
-    else
-      puts "0〜2の数字を入力してください。"
-      Janken.new.pon(Player.new.hand,Enemy.new.hand)
-    end
   end
 end
 
