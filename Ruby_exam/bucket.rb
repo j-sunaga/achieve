@@ -7,9 +7,9 @@ def bucket_sort(arr)
 
   max_number = 0  #arrから最大値を探し、max_numberに代入
   arr.each do |i|
-   if max_number < i
-     max_number = i
-   end
+    if max_number < i
+      max_number = i
+    end
   end
 
   #0 - max_numberまでの連番の配列を作成し、配列の添え字をキーとするハッシュを作成
@@ -23,7 +23,7 @@ def bucket_sort(arr)
   #新しい配列を作成し、bucketのvalueを順次、入れていく
   new_bucket = []
   bucket.each do |key, value|
-      new_bucket << value
+    new_bucket << value
   end
 
   #配列の入れ子になっている要素を平滑化する
