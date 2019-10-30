@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  </head>
+  <body>
+    <h1>ゴーヤ販売データベース</h1>
+
+    <% require 'pg' %>
+
+    <% connection = PG::connect(dbname: "goya") %>
+    <% connection.internal_encoding = "UTF-8" %>
+
+    <!-- 自家消費以外の販売データの取り出し -->
+    <% result = connection.exec("select * from crops where give_for != '自家消費' ;") %>
+    <% data = [] %>
+
+    <!-- 自家消費以外の販売データを文字列配列にして代入 -->
+    <% result.each do |record| %>
+      <%  data << "ゴーヤの長さ：#{record["length"]}　ゴーヤの重さ：#{record["weight"]}　ゴーヤの品質：#{record["quality"]}　売った相手：#{record["give_for"]}　日付：#{record["date"]}" %>
+    <% end %>
+
+    <!-- 自家消費以外の販売データの文字列配列を結合し、goya.cgiに送信 -->
+    <form action="goya.cgi" method="POST">
+       下記のボタンを押すと、自家消費以外のゴーヤの販売データに飛びます<br><br>
+       <!-- valueには、送りたいデータを代入する -->
+       <!-- name="goya"を、情報の目印とする -->
+      <input type="text" name="goya" value="<%= data.join(' ') %>">
+      <input type="submit" name="送信" value="自家消費以外の販売データ" >
+    </form>
+
+    <!-- 品質の悪いゴーヤの販売データの取り出し -->
+    <% bad_quality_goya = connection.exec("select * from crops where quality = false ;") %>
+    <% bad_quality_data = [] %>
+
+    <!-- 品質の悪いゴーヤの販売データを文字列配列にして代入 -->
+    <% bad_quality_goya.each do |record| %>
+      <%  bad_quality_data << "ゴーヤの長さ：#{record["length"]}　ゴーヤの重さ：#{record["weight"]}　ゴーヤの品質：#{record["quality"]}　売った相手：#{record["give_for"]}　日付：#{record["date"]}" %>
+    <% end %>
+
+    <!-- 品質の悪いゴーヤの販売データの文字列配列を結合し、bad_goya.cgiに送信 -->
+    <form action="bad_goya.cgi" method="POST">
+       下記のボタンを押すと、品質の悪いゴーヤの販売データに飛びます<br><br>
+       <!-- valueには、送りたいデータを代入する -->
+       <!-- name="bad_goya"を、情報の目印とする -->
+      <input type="text" name="bad_goya" value="<%= bad_quality_data.join(' ') %>">
+      <input type="submit" name="送信" value="品質の悪いゴーヤの販売データ" >
+    </form>
+  </body>
+</html>
