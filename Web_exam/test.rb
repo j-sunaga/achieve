@@ -18,7 +18,9 @@ server = WEBrick::HTTPServer.new({
 # WEBrick::HTTPServlet::FileHandlerをWEBrick::HTTPServlet::ERBHandlerに変更する
 # 'test.html'を'test.html.erb'に変更する
 server.mount('/test', WEBrick::HTTPServlet::ERBHandler, 'test.html.erb')
-server.mount('/sales', WEBrick::HTTPServlet::ERBHandler, 'sales.html.erb')
+
+#ルートフォルダで下記のページが呼び出される
+server.mount('/', WEBrick::HTTPServlet::ERBHandler, 'sales.html.erb')
 
 # この一行を追記
 server.mount('/goya.cgi', WEBrick::HTTPServlet::CGIHandler, 'goya.rb')
